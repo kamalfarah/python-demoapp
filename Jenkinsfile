@@ -35,4 +35,16 @@ build_image:
 deploy:
   stage: dedploy
   script:
+    withCredentials([file(credentialsId: 'kubeconfig-demo', variable: 'KUBECONFIG')]) {
+          sh '''
+            set -e
+            # Apply base manifests (if first time)
+            kubectl -n demo apply -f k8s/
+            
+
+            # Update the running deployment to the new exact image tag
+            kubectl -n demo set image deployment/hello-nginx hello-nginx=${IMAGE_NAME}:${BUILD_NUMBER}
+
+            # Wait for rollout to complete
+            kubectl -n demo rollout status deployment/hello-nginx
   
