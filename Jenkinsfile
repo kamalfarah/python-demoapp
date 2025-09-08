@@ -34,8 +34,8 @@ build_image:
     - docker push $IMAGE_NAME:$IMAGE_TAG 
 deploy:
   stage: dedploy
-  script:
-    withCredentials([file(credentialsId: 'kubeconfig-demo', variable: 'KUBECONFIG')]) {
+  scripts:
+    - withCredentials([file(credentialsId: 'kubeconfig-demo', variable: 'KUBECONFIG')]) {
           sh '''
             set -e
             # Apply base manifests (if first time)
@@ -47,4 +47,7 @@ deploy:
 
             # Wait for rollout to complete
             kubectl -n demo rollout status deployment/hello-nginx
+          '''
+        }
+            
   
