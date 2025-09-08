@@ -3,9 +3,14 @@ variables:
     IMAGE_TAG: python-app-1.0
     REGISTRY_USER: kamalfarah
     REGISTRY_PASS: Kmeva1982
+stages:
+  - test
+  - build
+  - deploy
 
 
 run_tests:
+  stage: test
   image: python:3.9-slim-buster
   before_script:
     - apt-get update && apt-get install make
@@ -13,6 +18,7 @@ run_tests:
     - make test
 
 build_image:
+  stage: build
   image: docker:20.10.16
   services:
     - docker:20.10.16-dind
@@ -26,3 +32,7 @@ build_image:
     - docker build -t $IMAGE_NAME:$IMAGE_TAG .
     
     - docker push $IMAGE_NAME:$IMAGE_TAG 
+deploy:
+  stage: dedploy
+  script:
+  
