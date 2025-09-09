@@ -39,14 +39,14 @@ deploy:
           sh '''
             set -e
             # Apply base manifests (if first time)
-            kubectl -n demo apply -f k8s/
+            kubectl -n demo apply -f /build/kubernetes/
             
 
             # Update the running deployment to the new exact image tag
-            kubectl -n demo set image deployment/hello-nginx hello-nginx=${IMAGE_NAME}:${BUILD_NUMBER}
+            kubectl -n demo set image deployment/python-demoapp python-demoapp=${IMAGE_NAME}:${BUILD_NUMBER}
 
             # Wait for rollout to complete
-            kubectl -n demo rollout status deployment/hello-nginx
+            kubectl -n demo rollout status deployment/python-demoapp
           '''
         }
             
