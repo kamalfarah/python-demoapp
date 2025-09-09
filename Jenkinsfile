@@ -9,6 +9,17 @@ pipeline {
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM',
+                    branches: [[name: '*/master']],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/kamalfarah/python-demoapp.git',
+                        credentialsId: 'github-cred'
+                    ]]
+                ])
+            }
+        }
         stage('Test') {
             agent {
                 docker {
