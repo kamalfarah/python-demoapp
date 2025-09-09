@@ -60,7 +60,7 @@ pipeline {
                     sh '''
                         set -e
                         # Apply manifests (if first time)
-                        kubectl -n demo apply -f kubernetes/
+                        kubectl -n demo apply -f deploy/kubernetes/
 
                         # Update the running deployment to new image tag
                         kubectl -n demo set image deployment/python-demoapp python-demoapp=$IMAGE_NAME:$IMAGE_TAG
