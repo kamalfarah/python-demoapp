@@ -23,7 +23,7 @@ pipeline {
         stage('Test') {
             agent {
                 docker {
-                    image 'python:3.9-slim-buster'
+                    image 'python:3.9-slim-bookworm'
                     args '-u root' // allow apt-get
                 }
             }
